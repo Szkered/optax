@@ -811,7 +811,7 @@ def scale_by_learning_rate(
     flip_sign is False).
   """
   m = -1 if flip_sign else 1
-  if callable(learning_rate):
+  if callable(learning_rate) and not isinstance(learning_rate, jax.core.Tracer):
     return scale_by_schedule(lambda count: m * learning_rate(count))
   return scale(m * learning_rate)
 
